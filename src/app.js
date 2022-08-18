@@ -14,7 +14,7 @@ let day =days[date.getDay()];
 }
 
 function displayTemperature(response) {
-console.log(response.data);
+
     let temperatureElement = document.querySelector("#temperature");
     let cityElement = document.querySelector("#city");
     let descriptionElement = document.querySelector("#description");
