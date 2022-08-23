@@ -21,6 +21,31 @@ function formatDate(timestamp) {
   return `${day} ${hours}:${minutes}`;
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  let days = ["Thu",  "Fri", "Sat", "Sun"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="col-2">
+        <div class="weather-forecast-date"> ${day} </div>
+        <img src="http://openweathermap.org/img/wn/02d@2x.png"
+         alt=""
+         width="42"/>
+         <div class="weather-forecast-temperature">
+         <span class="weather-forecast-temperature-max">
+         18° </span>
+         <span class="weather-forecast-temperature-min">
+            12°</span>
+         </div>
+</div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -30,7 +55,7 @@ function displayTemperature(response) {
   let dateElement = document.querySelector("#date");
   let iconElement = document.querySelector("#icon");
 
-celsiusTemperature = response.data.main.temp;
+  celsiusTemperature = response.data.main.temp;
 
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
@@ -57,22 +82,21 @@ function handleSubmit(event) {
 }
 
 function displayFahrenheitTemperature(event) {
-    event.preventDefault();
-    let temperatureElement = document.querySelector("#temperature");
-    let FahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-    temperatureElement.innerHTML = Math.round(FahrenheitTemperature);
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  let FahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(FahrenheitTemperature);
 }
 function displayCelsiusTemperature(event) {
-    event.preventDefault();
-let temperatureElement = document.querySelector("#temperature");
-temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
 let celsiusTemperature = null;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
-
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
@@ -81,3 +105,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("New York");
+displayForecast();
